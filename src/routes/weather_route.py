@@ -11,7 +11,6 @@ from src.logic.database_helper import get_day_weather
 from src.logic.env_import import SECRET_TOKEN
 from src.models.weather_model import ErrorResponse
 from src.models.weather_model import WeatherResponse
-from src.logic.env_import import DATABASE_PATH
 from src.logic.constants import DATE_FORMAT
 
 router = APIRouter()
@@ -37,8 +36,7 @@ def weather_history_list(date: str, request: Request) -> JSONResponse:
 
     try:
 
-        history = get_day_weather(weather_date=date_object,
-                                  database_path=DATABASE_PATH)
+        history = get_day_weather(weather_date=date_object)
         response_json = jsonable_encoder(WeatherResponse(date=date,
                                                          history=history))
         return JSONResponse(response_json, status_code=status.HTTP_200_OK)

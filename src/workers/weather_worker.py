@@ -9,7 +9,6 @@ import requests
 from src.logic.env_import import WEATHER_KEY
 from src.logic.env_import import CITY
 from src.logic.database_helper import insert_temperature
-from src.logic.env_import import DATABASE_PATH
 from src.logic.constants import TIME_FORMAT
 
 logger = logging.getLogger(__name__)
@@ -45,7 +44,6 @@ def set_weather():
             insert_temperature(temperature=temperature,
                                city=CITY,
                                weather_date=date.today(),
-                               weather_time=time.strftime(TIME_FORMAT),
-                               database_path=DATABASE_PATH)
+                               weather_time=time.strftime(TIME_FORMAT),)
     except DatabaseError as db_err:
         logger.error(f"DATABASE ERROR in worker: {db_err}")

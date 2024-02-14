@@ -11,6 +11,7 @@ from src.workers.weather_worker import set_weather
 
 app = FastAPI()
 app.include_router(api_routes)
+# db = psycopg2.connect(database="db_name", user="root", password="root", host="127.0.0.1", port="5433")
 
 scheduler = BlockingScheduler()
 parser = argparse.ArgumentParser()

@@ -9,6 +9,7 @@ APScheduler = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 requests = "*"
 pytest = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 

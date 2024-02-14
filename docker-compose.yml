@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  database:
+    image: mysql:latest
+    container_name: app-database
+    restart: always
+    env_file:
+      - .env
+#    environment:
+#      MYSQL_ROOT_PASSWORD: "root"
+#      MYSQL_DATABASE: "db_name"
+#      MYSQL_USER: "db_user"
+#      MYSQL_PASSWORD: "db_password"
+    volumes:
+      - "./database/.data:/var/lib/mysql"
+      - "./database/init-sql:/docker-entrypoint-initdb.d"
+  worker:
+    depends_on:
+      - database
+    build:
+      context: .
+      dockerfile: worker.Dockerfile
+    env_file:
+      - .env
+    command: >
+      sh -c "python main.py -w"
+  app:
+    depends_on:
+      - worker
+    build:
+      context: .
+      dockerfile: app.Dockerfile
+    env_file:
+      - .env
+    command: >
+      sh -c "python main.py -r"
+    ports:
+      - "5050:8000"
