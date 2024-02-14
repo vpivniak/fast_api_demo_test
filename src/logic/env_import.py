@@ -16,6 +16,18 @@ WEATHER_KEY = os.getenv('WEATHER_KEY') \
 SECRET_TOKEN = os.getenv('SECRET_TOKEN') \
     if "SECRET_TOKEN" in os.environ else absent_env_vars.append('SECRET_TOKEN')
 
+MYSQL_ROOT_PASSWORD = os.getenv('MYSQL_ROOT_PASSWORD') \
+    if "MYSQL_ROOT_PASSWORD" in os.environ else absent_env_vars.append('MYSQL_ROOT_PASSWORD')
+
+MYSQL_DATABASE = os.getenv('MYSQL_DATABASE') \
+    if "MYSQL_DATABASE" in os.environ else absent_env_vars.append('MYSQL_DATABASE')
+
+MYSQL_USER = os.getenv('MYSQL_USER') \
+    if "MYSQL_USER" in os.environ else absent_env_vars.append('MYSQL_USER')
+
+MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD') \
+    if "MYSQL_PASSWORD" in os.environ else absent_env_vars.append('MYSQL_PASSWORD')
+
 if absent_env_vars:
     logger.error("Cannot run app:")
     logger.error("Absent environment variables:")

@@ -6,11 +6,6 @@ services:
     restart: always
     env_file:
       - .env
-#    environment:
-#      MYSQL_ROOT_PASSWORD: "root"
-#      MYSQL_DATABASE: "db_name"
-#      MYSQL_USER: "db_user"
-#      MYSQL_PASSWORD: "db_password"
     volumes:
       - "./database/.data:/var/lib/mysql"
       - "./database/init-sql:/docker-entrypoint-initdb.d"
@@ -35,4 +30,4 @@ services:
     command: >
       sh -c "python main.py -r"
     ports:
-      - "5050:8000"
+      - "8001:8000"

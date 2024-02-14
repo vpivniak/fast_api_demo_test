@@ -4,12 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-fastapi="*"
 APScheduler = "*"
-uvicorn = {extras = ["standard"], version = "*"}
-requests = "*"
+fastapi="*"
+mysql-connector-python = "*"
 pytest = "*"
-psycopg2-binary = "*"
+requests = "*"
+uvicorn = {extras = ["standard"], version = "*"}
 
 [dev-packages]
 

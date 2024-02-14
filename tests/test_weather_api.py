@@ -1,4 +1,4 @@
-from src.workers.weather_worker import get_weather_temperature
+from workers.weather_worker import get_weather_temperature
 
 
 def test_returned_type():

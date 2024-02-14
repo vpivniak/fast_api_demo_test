@@ -6,12 +6,11 @@ import logging
 import uvicorn
 
 from src.routes import api_routes
-from src.logic.constants import EVERY_HOUR_CRON
-from src.workers.weather_worker import set_weather
+from src.logic.constants import EVERY_MINUTE_CRON
+from workers.weather_worker import set_weather
 
 app = FastAPI()
 app.include_router(api_routes)
-# db = psycopg2.connect(database="db_name", user="root", password="root", host="127.0.0.1", port="5433")
 
 scheduler = BlockingScheduler()
 parser = argparse.ArgumentParser()
@@ -30,11 +29,13 @@ if __name__ == "__main__":
         logger.info("App is running")
         uvicorn.run(
             app="main:app",
+            host="0.0.0.0",
+            port=8000,
             reload=True,
         )
     elif args.worker:
         logger.info("Worker is running")
-        scheduler.add_job(set_weather, CronTrigger.from_crontab(EVERY_HOUR_CRON))
+        scheduler.add_job(set_weather, CronTrigger.from_crontab(EVERY_MINUTE_CRON))
         scheduler.start()
     else:
         logger.error("Use -r flag for to app or use -w flag to run worker")

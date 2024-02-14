@@ -26,7 +26,7 @@ CREATE TABLE `weather` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `city` varchar(50) NOT NULL,
   `temperature` varchar(50) NOT NULL,
-  `weather_datetime` datetime NOT NULL,
+  `weather_date` date NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

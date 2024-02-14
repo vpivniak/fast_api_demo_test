@@ -1,40 +1,51 @@
 from datetime import date
+import logging
 
-import sqlite3
-from contextlib import closing
+import mysql.connector
+from mysql.connector.abstracts import MySQLConnectionAbstract
+from mysql.connector.pooling import PooledMySQLConnection
 
 from src.models.weather_model import WeatherModel
 
+logger = logging.getLogger(__name__)
 
-def insert_temperature(*, temperature: float, city: str, weather_date: date, weather_time: str):
+
+def insert_temperature(*,
+                       temperature: float,
+                       city: str,
+                       weather_date: date,
+                       connection: PooledMySQLConnection):
     """Insert to the database weather data"""
-    # with closing(sqlite3.connect(database_path)) as conn:
-    #     with conn:
-    #         conn.execute(
-    #             """
-    #             INSERT INTO weather
-    #                 (city, temperature, weather_datetime,)
-    #             VALUES
-    #                 (?, ?, ?, ?)
-    #             """,
-    #             (city, temperature, weather_datetime)
-    #         )
+    cur = connection.cursor()
+    try:
+        cur.execute(
+            """
+            INSERT INTO weather
+                (city, temperature, weather_date)
+            VALUES
+                (%s, %s, %s)
+            """,
+            [city, temperature, weather_date]
+        )
+        connection.commit()
+    except mysql.connector.Error as err:
+        logger.error("DATABASE ERROR - inserting record:", err)
+    finally:
+        cur.close()
 
 
-def get_day_weather(*, weather_date: date) -> list[WeatherModel]:
+async def get_day_weather(*, weather_date: date, connection: MySQLConnectionAbstract) -> list[WeatherModel]:
     """Read weather history from database for the current day"""
-    return []
-    # with closing(sqlite3.connect(database_path)) as conn:
-    #     with conn:
-    #         result = conn.execute(
-    #             """
-    #             SELECT id ,city, temperature, weather_datetime
-    #             FROM weather
-    #             WHERE weather_date=?
-    #             ORDER BY id
-    #             """,
-    #             (weather_date,)
-    #         )
-    #         temp_history = result.fetchall()
-    #
-    #         return [WeatherModel(id=row[0], city=row[1], temperature=row[2], time=row[3]) for row in temp_history]
+    async with await connection.cursor(buffered=True) as cur:
+        await cur.execute(
+            """
+            SELECT id ,city, temperature
+            FROM weather
+            WHERE weather_date=%s
+            ORDER BY id
+            """,
+            [weather_date]
+        )
+        histories = await cur.fetchall()
+
+        return [WeatherModel(id=row[0], city=row[1], temperature=row[2]) for row in histories]

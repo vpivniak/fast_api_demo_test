@@ -1,19 +1,47 @@
-create sqlite database file
-create table if not exists
+# FastApi demo project
+
+## Docker
+
+Run application, worker and database using docker compose.
+
+Run command below:
+
+```sh
+docker compose up -d
+```
+
+## App
+
+Application is ready on route.
+
+```
+0.0.0.0:8001
+```
+
+```
+0.0.0.0:8001/weather?date=2024-02-14
+```
+
+## Tests
+
+Tests run outside the docker.
 
 run commands below:
-source env_vars.sh
-python database/setup_database.py
 
-docker build --build-arg FLAG=-r -t ldit-image .
-docker run -it -p 8080:80 ldit-image
+```sh
+source env.sh
+```
 
+```sh
+pytest tests/
+```
 
-docker run -p 8080:80 -d ldit-image 
-docker run -v /Users/vpk/Documents/My_Project/LDIT/database:/data -it sqlite-image
+## Notes
+Env file with 'secret keys' should be under gitignore. Added for test project only
+Further improvements dived worker and application to the different projects with own packages.
 
-docker ps -aq | xargs docker stop | xargs docker rm
-docker inspect ldit-image  | grep IPAddress
+Add negative tests to check weather API.
 
-docker container ls
-docker container stop 
+## License
+
+MIT

@@ -7,7 +7,6 @@ class WeatherModel(BaseModel, extra='forbid'):
     id: int
     city: str
     temperature: float
-    time: str
 
 
 class WeatherResponse(BaseModel, extra='forbid'):
