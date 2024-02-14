@@ -37,10 +37,11 @@ pytest tests/
 ```
 
 ## Notes
-Env file with 'secret keys' should be under gitignore. Added for test project only
-Further improvements dived worker and application to the different projects with own packages.
-
-Add negative tests to check weather API.
+#### Project only.
+#### Further improvements:
+- '.env' file with 'secret keys' should be under gitignore. Added for test project only
+- Split worker and application to the different projects with own dependencies.
+- Add negative tests to check weather API.
 
 ## License
 
