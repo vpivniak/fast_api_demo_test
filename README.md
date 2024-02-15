@@ -29,6 +29,16 @@ Tests run outside the docker.
 run commands below:
 
 ```sh
+pip install pipenv
+```
+```sh
+pipenv shell
+```
+```sh
+pipenv install
+```
+
+```sh
 source env.sh
 ```
 
@@ -38,11 +48,11 @@ pytest tests/
 
 ## Notes
 #### Project only.
-#### Further improvements:
-- '.env' file with 'secret keys' should be under gitignore. Added for test project only
-- Split worker and application to the different projects with own dependencies.
-- Add negative tests to check weather API.
+#### Suggested Improvements:
+1. Split the worker functionality and the REST API endpoint application into two different projects (with monorepository)
+2. Add more business logic for the temperature and cover them with tests
+3. It is possible to add mysql tests with the test database for monitoring purposes
+4. Implement running of tests inside of docker
 
 ## License
-
 MIT
